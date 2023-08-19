@@ -8,31 +8,46 @@ public class TileInteractivePanel : UIPanel
 {
     [SerializeField] private Tile _tile;
     [SerializeField] private Image _itemImage;
-    [SerializeField] private TMP_Text _itemName;
+    [SerializeField] private TMP_Text _itemQuantity;
 
     [SerializeField] private Image _rewardItemImage;
+    [SerializeField] private TMP_Text _rewardItemQuantity;
 
     [SerializeField] private Slider _progreessBar;
+    [SerializeField] private Button _harvestButton;
 
     public void SetItem(Tile tile)
     {
         _tile = tile;
-        if (tile is IFertile fertileTile && tile is IHasInventory inventoryTile)
+        if (tile is IFertile fertileTile)
         {
-            if (inventoryTile.Inventory.Items.Count > 0)
+            if (fertileTile.GrowingEntity != null)
             {
-                _itemImage.sprite = inventoryTile.Inventory.Items[0].Icon;
-                _itemName.text = inventoryTile.Inventory.Items[0].Name;
-                //_rewardItemImage.sprite = fertileTile.GrowingEntity.RewardItem.Icon;
-                _progreessBar.maxValue = fertileTile.GrowingEntity.GrowthTime;
+                Item item = fertileTile.GrowingEntity.GrowingItem as Item;
+                Debug.Log($"Item: {item.Name}");
+                _itemImage.sprite = item.Icon;
+                _rewardItemImage.sprite = fertileTile.GrowingEntity.GrowingItem.RewardItem.Icon;
+                _progreessBar.maxValue = fertileTile.GrowingEntity.GrowingItem.GrowthTime;
                 _progreessBar.value = fertileTile.GrowingEntity.CurrentGrowthTime;
-            }
-            else
-            {
-                _progreessBar.maxValue = 1;
-                _progreessBar.value = 0;
+                _itemImage.color = Color.white;
+                _rewardItemImage.color = Color.white;
+                _itemQuantity.text = "";
+                _rewardItemQuantity.text = "";
+                _harvestButton.interactable = false;
+                _harvestButton.gameObject.SetActive(false);
+                IProcessable processable = fertileTile.GrowingEntity.GrowingItem as IProcessable;
+                if (processable.MaxReward > 1)
+                    _rewardItemQuantity.text = $"{processable.MinReward}-{processable.MaxReward}";
+
+                if (fertileTile.GrowingEntity.CurrentGrowthTime >= fertileTile.GrowingEntity.GrowingItem.GrowthTime)
+                {
+                    _harvestButton.gameObject.SetActive(true);
+                    _harvestButton.interactable = true;
+                }
 
             }
+            else
+                Clear();
         }
         else
         {
@@ -40,13 +55,48 @@ public class TileInteractivePanel : UIPanel
         }
     }
 
-    public void Update()
+    void FixedUpdate()
     {
-        if (_tile is IFertile fertileTile && _tile is IHasInventory inventoryTile)
+        if (_tile is IFertile fertileTile)
         {
-            if (inventoryTile.Inventory.Items.Count > 0)
+            if (fertileTile.GrowingEntity != null)
+            {
                 _progreessBar.value = fertileTile.GrowingEntity.CurrentGrowthTime;
+
+                if (fertileTile.GrowingEntity.CurrentGrowthTime >= fertileTile.GrowingEntity.GrowingItem.GrowthTime)
+                {
+                    _harvestButton.gameObject.SetActive(true);
+                    _harvestButton.interactable = true;
+                }
+            }
+
         }
+    }
+
+    public void HarvestButton()
+    {
+        if (_tile is IFertile fertileTile)
+        {
+            if (fertileTile.GrowingEntity != null)
+            {
+                fertileTile.GrowingEntity.Harvest();
+                Clear();
+            }
+        }
+    }
+
+    void Clear()
+    {
+        _progreessBar.maxValue = 1;
+        _progreessBar.value = 0;
+        _itemImage.sprite = null;
+        _itemImage.color = Color.clear;
+        _rewardItemImage.color = Color.clear;
+        _rewardItemImage.sprite = null;
+        _itemQuantity.text = "";
+        _rewardItemQuantity.text = "";
+        _harvestButton.interactable = false;
+        _harvestButton.gameObject.SetActive(false);
     }
 
 

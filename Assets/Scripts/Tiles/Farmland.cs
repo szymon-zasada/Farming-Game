@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Farmland : Tile, IHasInventory, IFertile
+public class Farmland : Tile, IFertile
 {
     public Inventory Inventory { get; set; } = new Inventory();
     public GrowingEntity GrowingEntity { get; set; }
@@ -26,15 +26,21 @@ public class Farmland : Tile, IHasInventory, IFertile
         }
     }
 
-    public void Plant(Item item)
+public void Plant(Item item)
+{
+    if (item is IPlantable)
     {
-        if (item is IPlantable)
+        if (GrowingEntity == null)
         {
-            //Inventory.DestroyItem(item);
             GameObject growingEntityGameObject = Instantiate(Resources.Load("Prefabs/Carrot"), transform.position, Quaternion.identity) as GameObject;
             growingEntityGameObject.transform.parent = transform;
             GrowingEntity = growingEntityGameObject.AddComponent<GrowingEntity>();
             GrowingEntity.SetInfo(item as IPlantable);
         }
+        else
+        {
+            Debug.Log("There is already a growing entity on this farmland.");
+        }
     }
+}
 }

@@ -23,12 +23,12 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] public Inventory PlayerInventory { get; private set; } = new Inventory();
 
 
-    [SerializeField] private InventoryPanel _inventoryPanel;
+    [SerializeField] public InventoryPanel InventoryPanel { get; private set; }
 
 
     void Start()
     {
-        _inventoryPanel = FindObjectOfType<InventoryPanel>();
+        InventoryPanel = FindObjectOfType<InventoryPanel>();
 
 
         AddItemToPlayerInventory(
@@ -39,17 +39,17 @@ public class InventoryManager : MonoBehaviour
             new Hoe()
         );
 
-        AddItemToPlayerInventory(new Seeds());
+        AddItemToPlayerInventory(new Plant("Carrot", "", 1, 3, 2, 1, 8f));
 
     }
 
 
 
-    void AddItemToPlayerInventory(Item item)
+    public void AddItemToPlayerInventory(Item item)
     {
         PlayerInventory.AddItem(item);
-        item.OnItemDestroyed += () => _inventoryPanel.Refresh();
-        _inventoryPanel.Refresh();
+        item.OnItemDestroyed += () => InventoryPanel.Refresh();
+        InventoryPanel.Refresh();
     }
 
 
@@ -58,9 +58,9 @@ public class InventoryManager : MonoBehaviour
         foreach (var item in items)
         {
             PlayerInventory.AddItem(item);
-            item.OnItemDestroyed += () => _inventoryPanel.Refresh();
+            item.OnItemDestroyed += () => InventoryPanel.Refresh();
         }
-        _inventoryPanel.Refresh();
+        InventoryPanel.Refresh();
     }
 
 }

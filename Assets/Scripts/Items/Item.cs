@@ -11,9 +11,8 @@ public class Item
     public string Name { get; protected set; }
     public string Description { get; protected set; }
     public Sprite Icon { get; protected set; }
-    public int MaxQuantity { get; protected set; }
-    public int Quantity { get; protected set; }
     public int Uses { get; protected set; }
+    public int MaxUses { get; protected set; }
 
 
 
@@ -23,19 +22,18 @@ public class Item
     }
 
 
-    public Item(string name, string description, string iconName, int uses, int maxQuantity = 1, int quantity = 1)
+    public Item(string name, string description, string iconName, int uses)
     {
         Name = name;
         Description = description;
         Icon = Resources.Load<Sprite>("Textures/Items/" + iconName);
-        MaxQuantity = maxQuantity;
-        Quantity = quantity;
         Uses = uses;
+        MaxUses = uses;
     }
 
     public virtual void Use()
     {
-
+        InventoryManager.Instance.InventoryPanel.Refresh();
     }
 
     public virtual void Destroy()

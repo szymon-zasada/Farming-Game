@@ -61,6 +61,8 @@ public class InteractionManager : MonoBehaviour
         if(SelectedItem == null)
             return;
 
+        
+
 
         SelectedItem.Use();
         if(SelectedItem.Uses <= 0)
@@ -71,7 +73,7 @@ public class InteractionManager : MonoBehaviour
 
     private void TileInteractivePanel()
     {
-        if(SelectedTile is IFertile tile && SelectedTile is IHasInventory tileInventory)
+        if(SelectedTile is IFertile tile)
         {
             _tileInteractivePanel.gameObject.SetActive(true);
             _tileInteractivePanel.SetItem(SelectedTile);

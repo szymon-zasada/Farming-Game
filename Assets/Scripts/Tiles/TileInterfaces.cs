@@ -26,3 +26,18 @@ public interface IFertile
     public GrowingEntity GrowingEntity { get; set; }
     void Plant(Item item);
 }
+
+public interface IWaterable
+{
+    void WaterTile();
+}
+
+public interface ISolidBlock
+{
+
+}
+
+public interface ICanBuildOn
+{
+    public Entity Entity { get; set; }
+}
