@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class Hoe : Item
@@ -19,28 +20,24 @@ public class Hoe : Item
     public override void Use()
     {
         if (InteractionManager.Instance.SelectedItem != this)
-        {
-            Debug.Log("You need to select the hoe first!");
             return;
+
+
+        if (InteractionManager.Instance.SelectedTile is not IFertilizable tile)
+        {
+            InteractionManager.Instance.ResetSelectedItem();
+            throw new InvalidOperationException("You can't use that here!");
         }
 
-        if (InteractionManager.Instance.SelectedTile is IFertilizable tile)
+
+        tile.FertilizeTile();
+        Uses--;
+
+
+        if (Uses <= 0)
         {
-            tile.FertilizeTile();
-            Uses--;
-            Debug.Log($"Hoe used! {Uses} uses left");
-
-
-            if (Uses <= 0)
-            {
-                Debug.Log("Hoe broke!");
-                Destroy();
-            }
-        }
-
-        else
-        {
-            Debug.Log("You can't use that here!");
+            Debug.Log("Hoe broke!");
+            Destroy();
         }
 
         base.Use();

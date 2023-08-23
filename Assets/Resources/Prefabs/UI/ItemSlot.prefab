@@ -397,6 +397,7 @@ MonoBehaviour:
   _image: {fileID: 2608215650238757717}
   _usesSlider: {fileID: 4434823384278878285}
   _quantityText: {fileID: 1007621349675588566}
+  _button: {fileID: 0}
 --- !u!114 &4161124958419451588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,7 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: -1
+    m_Mode: 3
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -421,7 +422,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
     m_HighlightedColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
     m_PressedColor: {r: 0.6037736, g: 0.48011163, b: 0.31612673, a: 1}
-    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 0.4716981, g: 0.36521637, b: 0.3048238, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

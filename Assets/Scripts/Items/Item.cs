@@ -1,16 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Item
 {
 
+ 
     public event Action OnItemDestroyed;
     public string Name { get; protected set; }
     public string Description { get; protected set; }
-    public Sprite Icon { get; protected set; }
+    [JsonIgnore] public Sprite Icon { get; protected set; }
     public int Uses { get; protected set; }
     public int MaxUses { get; protected set; }
 

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
-
+    
     private void Awake()
     {
         if (Instance == null)
@@ -26,6 +27,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] public InventoryPanel InventoryPanel { get; private set; }
 
 
+
+
     void Start()
     {
         InventoryPanel = FindObjectOfType<InventoryPanel>();
@@ -39,7 +42,18 @@ public class InventoryManager : MonoBehaviour
             new Hoe()
         );
 
-        AddItemToPlayerInventory(new Plant("Carrot", "", 1, 3, 2, 1, 8f));
+        AddItemToPlayerInventory(new Plant("Carrot", "", 8, 3, 1, 1, 8f));
+
+        
+
+
+       
+    
+        
+       
+        Plant carrot2 = ItemList.GetItem<Plant>("Carrot");
+        Debug.Log(carrot2.MaxReward);
+        
 
     }
 
@@ -51,6 +65,8 @@ public class InventoryManager : MonoBehaviour
         item.OnItemDestroyed += () => InventoryPanel.Refresh();
         InventoryPanel.Refresh();
     }
+
+    
 
 
     void AddItemsToPlayerInventory(List<Item> items)
@@ -64,3 +80,5 @@ public class InventoryManager : MonoBehaviour
     }
 
 }
+
+

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine.EventSystems;
 
 public class InteractionManager : MonoBehaviour
 {
@@ -11,9 +12,12 @@ public class InteractionManager : MonoBehaviour
 
     [SerializeField] private TileInteractivePanel _tileInteractivePanel;
 
+    [SerializeField] public EventSystem EventSystem { get; private set; }
+
     private void Start()
     {
         _tileInteractivePanel.gameObject.SetActive(false);
+        EventSystem = FindObjectOfType<EventSystem>();
     }
 
     private void Awake()
@@ -40,7 +44,7 @@ public class InteractionManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if(hit.collider.TryGetComponent<Tile>(out var tile))
+                if (hit.collider.TryGetComponent<Tile>(out var tile))
                 {
                     SelectedTile = tile;
                     UseItem();
@@ -50,6 +54,7 @@ public class InteractionManager : MonoBehaviour
                 else
                 {
                     SelectedTile = null;
+                    ResetSelectedItem();
                 }
             }
         }
@@ -58,22 +63,28 @@ public class InteractionManager : MonoBehaviour
 
     private void UseItem()
     {
-        if(SelectedItem == null)
+        if (SelectedItem == null)
             return;
 
-        
+
 
 
         SelectedItem.Use();
-        if(SelectedItem.Uses <= 0)
+        if (SelectedItem.Uses <= 0)
         {
-            SelectedItem = null;
+            ResetSelectedItem();
         }
+    }
+
+    public void ResetSelectedItem()
+    {
+        SelectedItem = null;
+        EventSystem.SetSelectedGameObject(null);
     }
 
     private void TileInteractivePanel()
     {
-        if(SelectedTile is IFertile tile)
+        if (SelectedTile is IFertile tile)
         {
             _tileInteractivePanel.gameObject.SetActive(true);
             _tileInteractivePanel.SetItem(SelectedTile);
@@ -81,6 +92,7 @@ public class InteractionManager : MonoBehaviour
         else
         {
             _tileInteractivePanel.gameObject.SetActive(false);
+            SelectedItem = null;
         }
     }
 }

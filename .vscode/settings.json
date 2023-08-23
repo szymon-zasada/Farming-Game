@@ -53,6 +53,9 @@
         "Temp/":true
     },
     "cSpell.words": [
+        "Behaviour",
+        "Stackable",
         "Waterable"
-    ]
+    ],
+    "dotnet.defaultSolution": "Farming-Game.sln"
 }

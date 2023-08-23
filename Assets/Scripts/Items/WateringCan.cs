@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class WateringCan : Item, IWaterStorage
 {
@@ -15,42 +16,35 @@ public class WateringCan : Item, IWaterStorage
 
     public override void Use()
     {
-        if(InteractionManager.Instance.SelectedItem != this)
-        {
-            Debug.Log("You need to select the watering can first!");
+        if (InteractionManager.Instance.SelectedItem != this)
             return;
-        }
 
-        if(InteractionManager.Instance.SelectedTile is IWaterable tile)
+        if (InteractionManager.Instance.SelectedTile is not IWaterable tile)
         {
-            tile.WaterTile();
-            Uses--;
-
-            if(Uses <= 0)
-            {
-                Uses = 0;
-                Debug.Log("Watering can empty!");
-            }
+            throw new InvalidOperationException("You can't use that here!");
         }
 
-        else
+        tile.WaterTile();
+        Uses--;
+
+        if (Uses <= 0)
         {
-            Debug.Log("You can't use that here!");
+            Uses = 0;
+            Debug.Log("Watering can empty!");
         }
+
     }
 
 
     public void Fill()
     {
-        if(InteractionManager.Instance.SelectedItem != this)
-        {
-            Debug.Log("You need to select the watering can first!");
+        if (InteractionManager.Instance.SelectedItem != this)
             return;
-        }
+        
 
-        if(InteractionManager.Instance.SelectedTile is ISolidBlock solidblock and ICanBuildOn tile)
+        if (InteractionManager.Instance.SelectedTile is ISolidBlock solidblock and ICanBuildOn tile)
         {
-            if(tile.Entity is IWaterSource)
+            if (tile.Entity is IWaterSource)
             {
                 Uses = 4;
             }

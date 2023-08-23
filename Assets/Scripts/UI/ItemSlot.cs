@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class ItemSlot : MonoBehaviour, IPointerClickHandler
+public class ItemSlot : MonoBehaviour
 {
     [SerializeField] private Item _item;
 
@@ -13,7 +13,9 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Image _image;
     [SerializeField] private Slider _usesSlider;
     [SerializeField] private TMP_Text _quantityText;
+    
 
+    [SerializeField] private Button _button;
 
     public void SetItem(Item item)
     {
@@ -43,18 +45,15 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log("Clicked on item slot");
-        InteractionManager.Instance.SelectedItem = _item;
-    }
-
     public void ActivateButton()
     {
-        Debug.Log("Clicked on item slot");
+        if(InteractionManager.Instance.SelectedItem == _item)
+        {
+            InteractionManager.Instance.ResetSelectedItem();
+               return;
+        }
         InteractionManager.Instance.SelectedItem = _item;
+        
     }
 
 

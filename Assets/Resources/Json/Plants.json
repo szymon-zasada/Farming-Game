@@ -1,0 +1,14 @@
+[
+  {
+    "MaxQuantity": 99,
+    "Quantity": 1,
+    "GrowthTime": 25.0,
+    "RewardItem": null,
+    "MaxReward": 3,
+    "MinReward": 1,
+    "Name": "Carrot",
+    "Description": "",
+    "Uses": 1,
+    "MaxUses": 1
+  }
+]

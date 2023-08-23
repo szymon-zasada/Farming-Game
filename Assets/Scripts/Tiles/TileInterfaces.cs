@@ -25,6 +25,7 @@ public interface IFertile
 {
     public GrowingEntity GrowingEntity { get; set; }
     void Plant(Item item);
+    
 }
 
 public interface IWaterable

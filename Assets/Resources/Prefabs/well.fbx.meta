@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 088e1fef4d8cc8046b4ec60cdd157287
+guid: 2fac491e8c533664cbc0290ff43b4e53
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: carrotBase
-    second: {fileID: 2100000, guid: 58225f2ffcc121243818d910b9011e8c, type: 2}
+      name: Well
+    second: {fileID: 2100000, guid: 99438a4a873fff94abe5fb6cab36c757, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -22,6 +22,8 @@ public class TimeManager : MonoBehaviour
     void Start()
     {
         _sun = GameObject.Find("Sun").GetComponent<Light>();
+        ItemList.LoadItems();
+        UnityEngine.Random.InitState((int)DateTime.Now.Ticks);
         
     }
 

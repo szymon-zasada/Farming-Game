@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
+[Serializable]
 public class Plant : Item, IPlantable, IProcessable, IStackable
 {
     public int MaxQuantity { get; set; }
@@ -11,22 +14,6 @@ public class Plant : Item, IPlantable, IProcessable, IStackable
     public int MaxReward { get; set; }
     public int MinReward { get; set; }
 
-
-
-    public Plant()
-    {
-        Name = "Carrot";
-        Description = "";
-        Icon = Resources.Load<Sprite>("Textures/Items/carrot");
-        MaxQuantity = 99;
-        Quantity = 1;
-        Uses = 1;
-        MaxReward = 3;
-        MinReward = 1;
-        RewardItem = new Plant("Carrot", "", Random.Range(MinReward, MaxReward));
-
-        GrowthTime = 8f;
-    }
 
     public Plant(string name, string description, int quantity = 1, int maxReward = 3, int minReward = 1, int uses = 1, float growthTime = 1000f)
     {
@@ -47,40 +34,43 @@ public class Plant : Item, IPlantable, IProcessable, IStackable
         if (InteractionManager.Instance.SelectedItem != this)
             return;
 
-        if (InteractionManager.Instance.SelectedTile is IFertile tile)
+        if (InteractionManager.Instance.SelectedTile is not IFertile tile)
         {
-            RewardItem = CreateSingleCopy();
-            tile.Plant(this);
-            Uses--;
+            InteractionManager.Instance.ResetSelectedItem();
+            throw new InvalidOperationException("Selected tile is not fertile.");
+        }
 
-            if (Uses <= 0)
+
+
+        RewardItem = CreateSingleCopy();
+
+        tile.Plant(this);
+        Uses--;
+
+        if (Uses <= 0)
+        {
+            if (Quantity > 1)
             {
-                if(Quantity > 1)
-                {
-                    Quantity--;
-                    Uses = MaxUses;
-                }
-                else
-                {
-                    Destroy();
-                }
+                Quantity--;
+                Uses = MaxUses;
             }
+            else
+                Destroy();
         }
-
-        else
-        {
-            Debug.Log("You can't use that here!");
-        }
-
-
         base.Use();
     }
 
 
     Plant CreateSingleCopy()
     {
-        return new Plant(Name, Description, Random.Range(MinReward,MaxReward), MaxReward, MinReward, Uses, GrowthTime);
+        if(this.RewardItem != null)
+            return this.RewardItem as Plant;
+        return new Plant(Name, Description, 1, MaxReward, MinReward, Uses, GrowthTime);
     }
+
+
+
+
 
 
 }
