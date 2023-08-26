@@ -19,7 +19,10 @@ public class Inventory
             if (existingItem is IStackable existingStackableItem)
                 existingStackableItem.Quantity += stackableItem.Quantity;
             else
+            {
                 Items.Add((Item)stackableItem);
+                item.OnItemDestroyed += () => DestroyItem(item);
+            }
         }
         else
         {
@@ -30,7 +33,14 @@ public class Inventory
 
     public void DestroyItem(Item item)
     {
-        Items.Remove(item);
+        if (item is IStackable stackableIte)
+        {
+            stackableIte.Quantity--;
+            if (stackableIte.Quantity <= 0)
+                Items.Remove(item);
+        }
+        else
+            Items.Remove(item);
     }
 
 

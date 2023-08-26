@@ -9,12 +9,11 @@ public class Item
 {
 
  
+ 
     public event Action OnItemDestroyed;
     public string Name { get; protected set; }
     public string Description { get; protected set; }
-    [JsonIgnore] public Sprite Icon { get; protected set; }
-    public int Uses { get; protected set; }
-    public int MaxUses { get; protected set; }
+    public string IconName { get; protected set; }
 
 
 
@@ -23,14 +22,11 @@ public class Item
 
     }
 
-
-    public Item(string name, string description, string iconName, int uses)
+    
+    public Item(string name, string description)
     {
         Name = name;
         Description = description;
-        Icon = Resources.Load<Sprite>("Textures/Items/" + iconName);
-        Uses = uses;
-        MaxUses = uses;
     }
 
     public virtual void Use()

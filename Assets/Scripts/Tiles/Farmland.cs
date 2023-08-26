@@ -5,29 +5,12 @@ using UnityEngine;
 
 public class Farmland : Tile, IFertile
 {
-    public Inventory Inventory { get; set; } = new Inventory();
     public GrowingEntity GrowingEntity { get; set; }
 
     public override void Start()
     {
-        Inventory = new Inventory();
+
     }
-
-    public void AddItemToInventory(Item item)
-    {
-        Debug.Log($"Added {item.Name} to tile inventory: {this.Id}");
-        Inventory.AddItem(item);
-    }
-
-    public void AddItemsToInventory(List<Item> items)
-    {
-        foreach (var item in items)
-        {
-            Inventory.AddItem(item);
-        }
-    }
-
-
 
     public void Plant(Item item)
     {
@@ -38,15 +21,17 @@ public class Farmland : Tile, IFertile
             throw new ArgumentException("There is already a growing entity on this farmland.");
 
 
-        GameObject growingEntityGameObject = Instantiate(Resources.Load("Prefabs/GrowingEntity"), transform.position, Quaternion.identity) as GameObject;
-        growingEntityGameObject.transform.parent = transform;
+        GrowingEntity = GrowingEntity.SpawnEntity<GrowingEntity>(this);
+
+
+        // GameObject growingEntityGameObject = Instantiate(Resources.Load("Prefabs/"+typeof(GrowingEntity).ToString()), transform.position, Quaternion.identity) as GameObject;
+
 
         for (int i = 4; i > 0; i--)
         {
-            CreateVisualItems(item, growingEntityGameObject, 0.65f, 0.1f, 0.55f);
+            CreateVisualItems(item, GrowingEntity.gameObject, 0.65f, 0.1f, 0.55f);
         }
 
-        GrowingEntity = growingEntityGameObject.AddComponent<GrowingEntity>();
         GrowingEntity.SetInfo(item as IPlantable);
     }
 
@@ -64,8 +49,8 @@ public class Farmland : Tile, IFertile
             }
         }
 
-
         GameObject plant = Instantiate(Resources.Load("Prefabs/Plants/" + item.Name)) as GameObject;
+        plant.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", Resources.Load<Texture>("Textures/Entities/" + item.Name + "_tex"));
         float tempPositionFromPrefab = plant.transform.position.y;
         Vector3 plantPosition = new Vector3(growingEntityGameObject.transform.position.x, plant.transform.position.y, growingEntityGameObject.transform.position.z);
 

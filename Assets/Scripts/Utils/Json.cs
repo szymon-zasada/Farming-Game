@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using System.IO;
 
 public class Json
 {
@@ -18,9 +19,10 @@ public class Json
     }
 
 
-    public static T LoadFrom<T>(string path)
+    public static List<T> LoadFrom<T>(string path)
     {
-        string json = System.IO.File.ReadAllText(path);
-        return JsonConvert.DeserializeObject<T>(json);
+        string json = File.ReadAllText(path);
+
+        return JsonConvert.DeserializeObject<List<T>>(json);
     }
 }

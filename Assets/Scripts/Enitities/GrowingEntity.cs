@@ -25,7 +25,7 @@ public class GrowingEntity : Entity, IHarvestable
     public override void Start()
     {
         base.Start();
-        _fullyGrownYPosition = EntityPrefab.transform.localPosition.y + 0.25f;
+        _fullyGrownYPosition = gameObject.transform.localPosition.y + 0.25f;
     }
 
 
@@ -40,7 +40,8 @@ public class GrowingEntity : Entity, IHarvestable
 
         CurrentGrowthTime += Time.fixedDeltaTime;
         float growthPercentage = CurrentGrowthTime / GrowingItem.GrowthTime;
-        EntityPrefab.transform.localPosition = new Vector3(EntityPrefab.transform.localPosition.x, Mathf.Clamp(_fullyGrownYPosition * growthPercentage, 0.01f, _fullyGrownYPosition), EntityPrefab.transform.localPosition.z);
+        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, Mathf.Clamp(_fullyGrownYPosition * growthPercentage, 0.01f, _fullyGrownYPosition), gameObject.transform.localPosition.z);
+
 
         if (CurrentGrowthTime >= GrowingItem.GrowthTime)
         {
@@ -57,12 +58,9 @@ public class GrowingEntity : Entity, IHarvestable
             if (GrowingItem.RewardItem == null)
                 throw new ArgumentException("Reward item is null.");
 
-            
-    
-
             InventoryManager.Instance.AddItemToPlayerInventory(GrowingItem.RewardItem);
             InteractionManager.Instance.ResetSelectedItem();
-            Destroy(EntityPrefab);
+            Destroy(gameObject);
         }
     }
 }

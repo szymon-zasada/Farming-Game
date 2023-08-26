@@ -7,7 +7,6 @@ public interface IPlantable
 {
     public float GrowthTime { get; set; }
     public Item RewardItem { get; set; }
-
 }
 
 public interface IWaterStorage
@@ -21,10 +20,21 @@ public interface IProcessable
     public int MinReward { get; set; }
 }
 
-
 public interface IStackable
 {
     public int MaxQuantity { get; set; }
     public int Quantity { get; set; }
 }
 
+public interface IMultipleUses
+{
+    public int Uses { get; set; }
+    public int MaxUses { get; set; }
+}
+
+
+public interface IPlaceable
+{
+    public string EntityName { get; set; }
+    public void Place();
+}

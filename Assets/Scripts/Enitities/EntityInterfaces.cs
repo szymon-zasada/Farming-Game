@@ -9,4 +9,6 @@ public interface IHarvestable
 public interface IWaterSource
 {
 
+    void Fill();
+
 }

@@ -70,10 +70,32 @@ public class InteractionManager : MonoBehaviour
 
 
         SelectedItem.Use();
-        if (SelectedItem.Uses <= 0)
+        if(SelectedItem is IMultipleUses multipleUsesItem)
         {
-            ResetSelectedItem();
+            if (multipleUsesItem.Uses <= 0)
+            {
+                ResetSelectedItem();
+            }
+            return;
         }
+    }
+
+
+    private void PlaceItem()
+    {
+        if (SelectedItem == null)
+            return;
+
+        if (SelectedTile is not ISolidBlock solidBlock)
+            throw new System.InvalidOperationException("You can't place that here!");
+
+        if (SelectedTile is not ICanPlaceOn tile)
+            throw new System.InvalidOperationException("You can't place that here!");
+
+        if (SelectedItem is not IPlaceable placeable)
+            throw new System.InvalidOperationException("You can't place that here!");
+        
+        placeable.Place();
     }
 
     public void ResetSelectedItem()

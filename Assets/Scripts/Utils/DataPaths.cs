@@ -8,6 +8,8 @@ public class DataPaths
 
     public const string ITEMS_PATH = "Assets/Resources/Json/Items.json";
 
+    public const string ITEM_TEXTURES_PATH = "Assets/Resources/Textures/Items/";
+
 
 
 

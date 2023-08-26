@@ -4,16 +4,14 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public class Hoe : Item
+public class Hoe : Item, IMultipleUses
 {
+    public int Uses { get; set; }
+    public int MaxUses { get; set; }
 
     public Hoe()
     {
-        Name = "Hoe";
-        Description = "A hoe for tilling the land";
-        Icon = Resources.Load<Sprite>("Textures/Items/Hoe");
-        Uses = 2;
-        MaxUses = 2;
+        
     }
 
 

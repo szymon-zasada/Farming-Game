@@ -1,16 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using System.Reflection;
 
 public class Entity : MonoBehaviour
 {
     public string Name { get; protected set; }
-    public GameObject EntityPrefab { get; protected set; }
 
     public virtual void Start()
     {
-        EntityPrefab = gameObject;
-       // gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Entities/" + Name);
+        // gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Entities/" + Name);
+    }
+
+    public static T SpawnEntity<T>(Tile tile) where T : Entity
+    {
+        var gameObj = Instantiate(Resources.Load("Prefabs/" + typeof(T).ToString()), tile.transform.position, Quaternion.identity) as GameObject;
+        gameObj.transform.parent = tile.transform;
+        gameObj.AddComponent<T>();
+        return gameObj.GetComponent<T>();
     }
 
 

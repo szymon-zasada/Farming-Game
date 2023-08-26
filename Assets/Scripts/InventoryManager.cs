@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -18,6 +18,8 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        InventoryPanel = FindObjectOfType<InventoryPanel>();
     }
 
 
@@ -26,34 +28,18 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] public InventoryPanel InventoryPanel { get; private set; }
 
-
+    
 
 
     void Start()
     {
-        InventoryPanel = FindObjectOfType<InventoryPanel>();
-
-
-        AddItemToPlayerInventory(
-            new Hoe()
-        );
-
-        AddItemToPlayerInventory(
-            new Hoe()
-        );
-
-        AddItemToPlayerInventory(new Plant("Carrot", "", 8, 3, 1, 1, 8f));
-
         
 
 
-       
-    
-        
-       
-        Plant carrot2 = ItemList.GetItem<Plant>("Carrot");
-        Debug.Log(carrot2.MaxReward);
-        
+
+
+        AddItemToPlayerInventory(ItemList.GetItem<PlaceableItem>("Well"));
+
 
     }
 
@@ -66,7 +52,7 @@ public class InventoryManager : MonoBehaviour
         InventoryPanel.Refresh();
     }
 
-    
+
 
 
     void AddItemsToPlayerInventory(List<Item> items)

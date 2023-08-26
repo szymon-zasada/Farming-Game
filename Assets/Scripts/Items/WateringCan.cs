@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class WateringCan : Item, IWaterStorage
+public class WateringCan : Item, IWaterStorage, IMultipleUses
 {
+    public int Uses { get; set; }
+    public int MaxUses { get; set; }
+
+    
     public WateringCan()
     {
-        Name = "Watering Can";
-        Description = "A watering can for watering plants.";
-        Icon = Resources.Load<Sprite>("Textures/Items/wateringCan");
-        Uses = 4;
+
     }
 
 
@@ -42,7 +43,7 @@ public class WateringCan : Item, IWaterStorage
             return;
         
 
-        if (InteractionManager.Instance.SelectedTile is ISolidBlock solidblock and ICanBuildOn tile)
+        if (InteractionManager.Instance.SelectedTile is ISolidBlock solidBlock and ICanPlaceOn tile)
         {
             if (tile.Entity is IWaterSource)
             {

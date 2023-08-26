@@ -44,7 +44,7 @@ public class GridManager : MonoBehaviour
         GenerateFarmlands(2, 4);
         GenerateFarmlands(0, 2);
 
-        TimeManager.SetTime(0.24f);
+        TimeManager.SetTime(0.36f);
 
 
     }

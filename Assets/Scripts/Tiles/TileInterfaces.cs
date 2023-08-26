@@ -38,7 +38,8 @@ public interface ISolidBlock
 
 }
 
-public interface ICanBuildOn
+public interface ICanPlaceOn
 {
     public Entity Entity { get; set; }
+    public void Place(Item item);
 }

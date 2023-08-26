@@ -13,24 +13,32 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] private Image _image;
     [SerializeField] private Slider _usesSlider;
     [SerializeField] private TMP_Text _quantityText;
-    
+
 
     [SerializeField] private Button _button;
 
     public void SetItem(Item item)
     {
         _item = item;
-        _image.sprite = item.Icon;
-        if (item.MaxUses > 1 && item.Uses != item.MaxUses)
+        _image.sprite = Resources.Load<Sprite>(DataPaths.ITEM_TEXTURES_PATH + item.IconName);
+        if (item is IMultipleUses multipleUsesItem)
         {
-            _usesSlider.gameObject.SetActive(true);
-            _usesSlider.maxValue = item.MaxUses;
-            _usesSlider.value = item.Uses;
+            if (multipleUsesItem.MaxUses > 1 && multipleUsesItem.Uses != multipleUsesItem.MaxUses)
+            {
+                _usesSlider.gameObject.SetActive(true);
+                _usesSlider.maxValue = multipleUsesItem.MaxUses;
+                _usesSlider.value = multipleUsesItem.Uses;
+            }
+            else
+            {
+                _usesSlider.gameObject.SetActive(false);
+            }
         }
         else
         {
             _usesSlider.gameObject.SetActive(false);
         }
+
 
         if (item is IStackable stackableItem)
         {
@@ -47,13 +55,13 @@ public class ItemSlot : MonoBehaviour
 
     public void ActivateButton()
     {
-        if(InteractionManager.Instance.SelectedItem == _item)
+        if (InteractionManager.Instance.SelectedItem == _item)
         {
             InteractionManager.Instance.ResetSelectedItem();
-               return;
+            return;
         }
         InteractionManager.Instance.SelectedItem = _item;
-        
+
     }
 
 

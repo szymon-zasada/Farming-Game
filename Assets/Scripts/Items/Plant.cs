@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Newtonsoft.Json;
 
 [Serializable]
 public class Plant : Item, IPlantable, IProcessable, IStackable
@@ -15,15 +16,14 @@ public class Plant : Item, IPlantable, IProcessable, IStackable
     public int MinReward { get; set; }
 
 
-    public Plant(string name, string description, int quantity = 1, int maxReward = 3, int minReward = 1, int uses = 1, float growthTime = 1000f)
+    [JsonConstructor]
+    public Plant(string name, string description, int quantity = 1, int maxReward = 3, int minReward = 1, float growthTime = 1000f)
     {
         Name = name;
         Description = description;
-        Icon = Resources.Load<Sprite>("Textures/Items/" + name);
+        IconName = name;
         MaxQuantity = 99;
         Quantity = quantity;
-        Uses = uses;
-        MaxUses = uses;
         GrowthTime = growthTime;
         MaxReward = maxReward;
         MinReward = minReward;
@@ -45,18 +45,7 @@ public class Plant : Item, IPlantable, IProcessable, IStackable
         RewardItem = CreateSingleCopy();
 
         tile.Plant(this);
-        Uses--;
-
-        if (Uses <= 0)
-        {
-            if (Quantity > 1)
-            {
-                Quantity--;
-                Uses = MaxUses;
-            }
-            else
-                Destroy();
-        }
+        Destroy();
         base.Use();
     }
 
@@ -65,7 +54,7 @@ public class Plant : Item, IPlantable, IProcessable, IStackable
     {
         if(this.RewardItem != null)
             return this.RewardItem as Plant;
-        return new Plant(Name, Description, 1, MaxReward, MinReward, Uses, GrowthTime);
+        return new Plant(Name, Description, 1, MaxReward, MinReward, GrowthTime);
     }
 
 

@@ -25,8 +25,8 @@ public class TileInteractivePanel : UIPanel
             {
                 Item item = fertileTile.GrowingEntity.GrowingItem as Item;
                 Debug.Log($"Item: {item.Name}");
-                _itemImage.sprite = item.Icon;
-                _rewardItemImage.sprite = fertileTile.GrowingEntity.GrowingItem.RewardItem.Icon;
+                _itemImage.sprite = Resources.Load<Sprite>("Textures/Items/" + item.IconName);
+                _rewardItemImage.sprite = Resources.Load<Sprite>("Textures/Items/" + fertileTile.GrowingEntity.GrowingItem.RewardItem.IconName);
                 _progreessBar.maxValue = fertileTile.GrowingEntity.GrowingItem.GrowthTime;
                 _progreessBar.value = fertileTile.GrowingEntity.CurrentGrowthTime;
                 _itemImage.color = Color.white;
