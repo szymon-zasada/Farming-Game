@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Newtonsoft.Json;
 
-public class WateringCan : Item, IWaterStorage, IMultipleUses
+[Serializable]
+public class WateringCan : Item, IWaterContainer, IMultipleUses
 {
     public int Uses { get; set; }
     public int MaxUses { get; set; }
 
-    
-    public WateringCan()
-    {
 
+    [JsonConstructor]
+    public WateringCan(string name, string description, int uses = 4, int maxUses = 4)
+    {
+        Name = name;
+        Description = description;
+        Uses = uses;
+        MaxUses = maxUses;
     }
+
 
 
     public override void Use()
@@ -20,13 +27,34 @@ public class WateringCan : Item, IWaterStorage, IMultipleUses
         if (InteractionManager.Instance.SelectedItem != this)
             return;
 
-        if (InteractionManager.Instance.SelectedTile is not IWaterable tile)
-        {
-            throw new InvalidOperationException("You can't use that here!");
-        }
+        if (InteractionManager.Instance.SelectedTile is ICanPlaceOn canPlaceOnTile)
+            if (canPlaceOnTile.Entity is IWaterSource)
+            {
+                Fill();
+                return;
+            }
 
-        tile.WaterTile();
-        Uses--;
+
+        if (InteractionManager.Instance.SelectedTile is not IFertile tile)
+            throw new InvalidOperationException("You can't use that here!");
+
+
+        if(tile.GrowingEntity.WaterLevel < tile.GrowingEntity.MaxWaterLevel)
+        {
+            int waterNeeded = (int)(tile.GrowingEntity.MaxWaterLevel - tile.GrowingEntity.WaterLevel);
+            int waterAvailable = Uses;
+
+            if (waterAvailable < waterNeeded)
+                waterNeeded = waterAvailable;
+            tile.GrowingEntity.WaterTile(waterNeeded);
+
+            Uses -= waterNeeded;
+            InventoryManager.Instance.InventoryPanel.Refresh();
+            InteractionManager.Instance.ResetSelectedItem();
+        }
+        else
+            Debug.Log("This plant doesn't need any more water!");
+        
 
         if (Uses <= 0)
         {
@@ -38,22 +66,8 @@ public class WateringCan : Item, IWaterStorage, IMultipleUses
 
     public void Fill()
     {
-        if (InteractionManager.Instance.SelectedItem != this)
-            return;
-        
-
-        if (InteractionManager.Instance.SelectedTile is ISolidBlock solidBlock and ICanPlaceOn tile)
-        {
-            if (tile.Entity is IWaterSource)
-            {
-                Uses = 4;
-            }
-
-            else
-                Debug.Log("You can't fill that here!");
-        }
-
-        else
-            Debug.Log("You can't fill that here!");
+        Uses = MaxUses;
+        InteractionManager.Instance.ResetSelectedItem();
+        InventoryManager.Instance.InventoryPanel.Refresh();
     }
 }

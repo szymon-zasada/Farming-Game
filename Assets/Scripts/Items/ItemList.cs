@@ -28,7 +28,20 @@ public class ItemList
     {
         foreach (var item in List)
         {
-            item.Icon = Resources.Load<Sprite>("Textures/Items/" + item.Name);
+            string searchName = item.Name;
+            if(searchName.Contains(" "))
+                searchName = searchName.Replace(" ", "");
+        
+            Sprite sprite = Resources.Load<Sprite>("Textures/Items/" + searchName);
+            if (sprite != null)
+                item.Icon = sprite;
+            else
+            {
+                item.Icon = Resources.Load<Sprite>("Textures/Items/Default");
+                throw new System.InvalidOperationException("Item icon not found!");
+            }
+
+
         }
     }
 }
@@ -45,38 +58,18 @@ public class ItemConverter : JsonConverter
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
         JObject itemObject = JObject.Load(reader);
-        Type type = GetTypeFromProperties(itemObject);
+        
+        Type type = Type.GetType(itemObject["Type"].ToString());
         if (type == null)
             throw new InvalidOperationException("Invalid item type!");
 
+        itemObject.Remove("Type");
         return itemObject.ToObject(type);
     }
 
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
         throw new NotImplementedException();
-    }
-
-    private Type GetTypeFromProperties(JObject itemObject)
-    {
-        Type[] types = new[] { typeof(Plant), typeof(PlaceableItem) };
-        
-
-        foreach (var type in types)
-        {
-
-
-            var itemObjectProperties = itemObject.Properties().Select(p => p.Name);
-
-            var ignoredTypeProperties = new[] { "Icon" };
-            var typeProperties = type.GetProperties().Select(p => p.Name).Except(ignoredTypeProperties);
-
-
-            if (itemObjectProperties.All(p => typeProperties.Contains(p)))
-                return type;
-        }
-
-        return null;
     }
 }
 

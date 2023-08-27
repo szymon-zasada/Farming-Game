@@ -7,9 +7,13 @@ public interface IPlantable
 {
     public float GrowthTime { get; set; }
     public Item RewardItem { get; set; }
+    public float MaxWaterLevel { get; set; }
+    public float WaterPerTick { get; set; }
+
+    public void GenerateRandomRewardQuantity();
 }
 
-public interface IWaterStorage
+public interface IWaterContainer
 {
     public void Fill();
 }

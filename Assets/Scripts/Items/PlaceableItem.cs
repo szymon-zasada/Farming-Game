@@ -36,7 +36,7 @@ public class PlaceableItem : Item, IPlaceable
 
     public override void Use()
     {
-        if (InteractionManager.Instance.SelectedTile is not ISolidBlock)
+        if (InteractionManager.Instance.SelectedTile is not ISolidTile)
         {
             InteractionManager.Instance.ResetSelectedItem();
             throw new System.InvalidOperationException("This is not a solid block!");

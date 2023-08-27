@@ -17,7 +17,11 @@ public class Inventory
         {
             Item existingItem = Items.FirstOrDefault(i => i.Name == item.Name);
             if (existingItem is IStackable existingStackableItem)
+            {
+                Debug.Log("Stacking");
                 existingStackableItem.Quantity += stackableItem.Quantity;
+            }
+
             else
             {
                 Items.Add((Item)stackableItem);
@@ -33,10 +37,10 @@ public class Inventory
 
     public void DestroyItem(Item item)
     {
-        if (item is IStackable stackableIte)
+        if (item is IStackable stackableItem)
         {
-            stackableIte.Quantity--;
-            if (stackableIte.Quantity <= 0)
+            stackableItem.Quantity--;
+            if (stackableItem.Quantity <= 0)
                 Items.Remove(item);
         }
         else

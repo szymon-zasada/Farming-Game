@@ -1,17 +1,28 @@
 [
   {
+    "Type": "Plant",
     "MaxQuantity": 99,
     "Quantity": 1,
-    "GrowthTime": 25.0,
+    "GrowthTime": 5.0,
+    "MaxWaterLevel": 5.0,
+    "WaterPerTick": 1.0,
     "RewardItem": null,
     "MaxReward": 3,
     "MinReward": 1,
     "Name": "Carrot",
-    "Description": ""
+    "Description": "A carrot."
   },
   {
+    "Type": "PlaceableItem",
     "EntityName": "Well",
     "Name": "Well",
     "Description": ""
+  },
+  {
+    "Type": "WateringCan",
+    "Uses": 0,
+    "MaxUses": 3,
+    "Name": "Watering Can",
+    "Description": "A watering can for watering plants."
   }
 ]

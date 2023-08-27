@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 
-public class Grass : Tile, IFertilizable, ICanPlaceOn, ISolidBlock
+public class Grass : Tile, IFertilizable, ICanPlaceOn, ISolidTile
 {
     public Entity Entity { get; set; }
     public void FertilizeTile()

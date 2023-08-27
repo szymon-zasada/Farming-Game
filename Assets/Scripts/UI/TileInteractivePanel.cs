@@ -13,8 +13,10 @@ public class TileInteractivePanel : UIPanel
     [SerializeField] private Image _rewardItemImage;
     [SerializeField] private TMP_Text _rewardItemQuantity;
 
-    [SerializeField] private Slider _progreessBar;
+    [SerializeField] private Slider _progressBar;
     [SerializeField] private Button _harvestButton;
+
+    [SerializeField] private Slider _waterBar;
 
     public void SetItem(Tile tile)
     {
@@ -24,11 +26,12 @@ public class TileInteractivePanel : UIPanel
             if (fertileTile.GrowingEntity != null)
             {
                 Item item = fertileTile.GrowingEntity.GrowingItem as Item;
-                Debug.Log($"Item: {item.Name}");
                 _itemImage.sprite = item.Icon;
                 _rewardItemImage.sprite = fertileTile.GrowingEntity.GrowingItem.RewardItem.Icon;
-                _progreessBar.maxValue = fertileTile.GrowingEntity.GrowingItem.GrowthTime;
-                _progreessBar.value = fertileTile.GrowingEntity.CurrentGrowthTime;
+                _progressBar.maxValue = fertileTile.GrowingEntity.GrowingItem.GrowthTime;
+                _progressBar.value = fertileTile.GrowingEntity.CurrentGrowthTime;
+                _waterBar.maxValue = fertileTile.GrowingEntity.MaxWaterLevel;
+                _waterBar.value = fertileTile.GrowingEntity.WaterLevel;
                 _itemImage.color = Color.white;
                 _rewardItemImage.color = Color.white;
                 _itemQuantity.text = "";
@@ -61,7 +64,8 @@ public class TileInteractivePanel : UIPanel
         {
             if (fertileTile.GrowingEntity != null)
             {
-                _progreessBar.value = fertileTile.GrowingEntity.CurrentGrowthTime;
+                _progressBar.value = fertileTile.GrowingEntity.CurrentGrowthTime;
+                _waterBar.value = fertileTile.GrowingEntity.WaterLevel;
 
                 if (fertileTile.GrowingEntity.CurrentGrowthTime >= fertileTile.GrowingEntity.GrowingItem.GrowthTime)
                 {
@@ -87,8 +91,10 @@ public class TileInteractivePanel : UIPanel
 
     void Clear()
     {
-        _progreessBar.maxValue = 1;
-        _progreessBar.value = 0;
+        _progressBar.maxValue = 1;
+        _progressBar.value = 0;
+        _waterBar.maxValue = 1;
+        _waterBar.value = 0;
         _itemImage.sprite = null;
         _itemImage.color = Color.clear;
         _rewardItemImage.color = Color.clear;

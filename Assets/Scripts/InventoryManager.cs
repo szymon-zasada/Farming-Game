@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -28,16 +29,17 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] public InventoryPanel InventoryPanel { get; private set; }
 
-    
+
 
 
     void Start()
     {
-        
-  
 
 
+        AddItemToPlayerInventory(ItemList.GetItem<Plant>("Carrot"));
         AddItemToPlayerInventory(ItemList.GetItem<PlaceableItem>("Well"));
+        AddItemToPlayerInventory(ItemList.GetItem<WateringCan>("Watering Can"));
+
 
 
     }
