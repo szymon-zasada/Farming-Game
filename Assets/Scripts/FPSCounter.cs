@@ -7,23 +7,32 @@ using System.Threading.Tasks;
 public class FPSCounter : MonoBehaviour
 {
     [SerializeField] private TMP_Text fpsText;
-    private float fpsSum;
-    private int fpsCount;
 
-    private async void Start()
+    private float fpsCounter = 0;
+    private float currentFpsTime = 0;
+    private float fpsShowPeriod = 1;
+
+    private void Start()
     {
-        while (true)
-        {
-            fpsSum += 1.0f / Time.deltaTime;
-            fpsCount++;
-            await Task.Delay(100);
-        }
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
     }
+
 
     private void Update()
     {
-        fpsText.text = "FPS: " + (fpsSum / fpsCount).ToString("0.0");
+        currentFpsTime = currentFpsTime + Time.deltaTime;
+        fpsCounter = fpsCounter + 1;
+        if (currentFpsTime > fpsShowPeriod)
+        {
+            fpsText.text = "FPS: " + fpsCounter.ToString();
+            currentFpsTime = 0;
+            fpsCounter = 0;
+        }
     }
+
+
+
 
 
 
