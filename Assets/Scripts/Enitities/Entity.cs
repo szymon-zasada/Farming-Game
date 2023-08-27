@@ -16,7 +16,9 @@ public class Entity : MonoBehaviour
 
     public static T SpawnEntity<T>(Tile tile) where T : Entity
     {
-        var gameObj = Instantiate(Resources.Load("Prefabs/" + typeof(T).ToString()), tile.transform.position, Quaternion.identity) as GameObject;
+        var prefab = Resources.Load("Prefabs/" + typeof(T).ToString()) as GameObject;
+        var position = tile.transform.position + prefab.transform.position;
+        var gameObj = Instantiate(prefab, position, Quaternion.identity*prefab.transform.rotation) as GameObject;
         gameObj.transform.parent = tile.transform;
         gameObj.AddComponent<T>();
         return gameObj.GetComponent<T>();

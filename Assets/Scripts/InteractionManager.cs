@@ -48,7 +48,6 @@ public class InteractionManager : MonoBehaviour
                 {
                     SelectedTile = tile;
                     UseItem();
-
                     TileInteractivePanel();
                 }
                 else
@@ -78,24 +77,6 @@ public class InteractionManager : MonoBehaviour
             }
             return;
         }
-    }
-
-
-    private void PlaceItem()
-    {
-        if (SelectedItem == null)
-            return;
-
-        if (SelectedTile is not ISolidBlock solidBlock)
-            throw new System.InvalidOperationException("You can't place that here!");
-
-        if (SelectedTile is not ICanPlaceOn tile)
-            throw new System.InvalidOperationException("You can't place that here!");
-
-        if (SelectedItem is not IPlaceable placeable)
-            throw new System.InvalidOperationException("You can't place that here!");
-        
-        placeable.Place();
     }
 
     public void ResetSelectedItem()

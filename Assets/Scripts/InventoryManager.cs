@@ -34,8 +34,7 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         
-
-
+  
 
 
         AddItemToPlayerInventory(ItemList.GetItem<PlaceableItem>("Well"));

@@ -31,9 +31,8 @@ public class WateringCan : Item, IWaterStorage, IMultipleUses
         if (Uses <= 0)
         {
             Uses = 0;
-            Debug.Log("Watering can empty!");
+            Debug.Log("Your watering can is empty!");
         }
-
     }
 
 

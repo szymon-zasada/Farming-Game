@@ -36,5 +36,5 @@ public interface IMultipleUses
 public interface IPlaceable
 {
     public string EntityName { get; set; }
-    public void Place();
+    public void Place(ICanPlaceOn tile);
 }

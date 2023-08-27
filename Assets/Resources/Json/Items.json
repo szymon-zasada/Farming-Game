@@ -10,8 +10,8 @@
     "Description": ""
   },
   {
+    "EntityName": "Well",
     "Name": "Well",
-    "Description": "A well for storing water.",
-    "EntityName": "Well"
+    "Description": ""
   }
 ]

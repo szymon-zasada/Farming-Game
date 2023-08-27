@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using UnityEngine;
+using System.Reflection;
 
 
 public class ItemList
@@ -45,7 +46,7 @@ public class ItemConverter : JsonConverter
     {
         JObject itemObject = JObject.Load(reader);
         Type type = GetTypeFromProperties(itemObject);
-        if(type == null)
+        if (type == null)
             throw new InvalidOperationException("Invalid item type!");
 
         return itemObject.ToObject(type);
@@ -59,6 +60,7 @@ public class ItemConverter : JsonConverter
     private Type GetTypeFromProperties(JObject itemObject)
     {
         Type[] types = new[] { typeof(Plant), typeof(PlaceableItem) };
+        
 
         foreach (var type in types)
         {
@@ -69,10 +71,8 @@ public class ItemConverter : JsonConverter
             var ignoredTypeProperties = new[] { "Icon" };
             var typeProperties = type.GetProperties().Select(p => p.Name).Except(ignoredTypeProperties);
 
-            Debug.Log("ItemObjectProperties: " + string.Join(", ", itemObjectProperties));
-            Debug.Log("TypeProperties: " + string.Join(", ", typeProperties));
 
-            if(itemObjectProperties.All(p => typeProperties.Contains(p)))
+            if (itemObjectProperties.All(p => typeProperties.Contains(p)))
                 return type;
         }
 
