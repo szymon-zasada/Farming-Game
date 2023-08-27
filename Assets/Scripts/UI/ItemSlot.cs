@@ -20,7 +20,7 @@ public class ItemSlot : MonoBehaviour
     public void SetItem(Item item)
     {
         _item = item;
-        _image.sprite = Resources.Load<Sprite>(DataPaths.ITEM_TEXTURES_PATH + item.IconName);
+        _image.sprite = item.Icon;
         if (item is IMultipleUses multipleUsesItem)
         {
             if (multipleUsesItem.MaxUses > 1 && multipleUsesItem.Uses != multipleUsesItem.MaxUses)

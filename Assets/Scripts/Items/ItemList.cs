@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
-using System.Reflection;
 using UnityEngine;
 
 
@@ -17,13 +15,23 @@ public class ItemList
     {
         string json = File.ReadAllText(DataPaths.ITEMS_PATH);
         List = JsonConvert.DeserializeObject<List<Item>>(json, new ItemConverter());
+        LoadIcons();
     }
 
     public static T GetItem<T>(string name) where T : Item
     {
         return List.FirstOrDefault(i => i.Name == name) as T;
     }
+
+    public static void LoadIcons()
+    {
+        foreach (var item in List)
+        {
+            item.Icon = Resources.Load<Sprite>("Textures/Items/" + item.Name);
+        }
+    }
 }
+
 
 
 public class ItemConverter : JsonConverter
@@ -60,6 +68,9 @@ public class ItemConverter : JsonConverter
 
             var ignoredTypeProperties = new[] { "Icon" };
             var typeProperties = type.GetProperties().Select(p => p.Name).Except(ignoredTypeProperties);
+
+            Debug.Log("ItemObjectProperties: " + string.Join(", ", itemObjectProperties));
+            Debug.Log("TypeProperties: " + string.Join(", ", typeProperties));
 
             if(itemObjectProperties.All(p => typeProperties.Contains(p)))
                 return type;

@@ -21,7 +21,6 @@ public class Plant : Item, IPlantable, IProcessable, IStackable
     {
         Name = name;
         Description = description;
-        IconName = name;
         MaxQuantity = 99;
         Quantity = quantity;
         GrowthTime = growthTime;

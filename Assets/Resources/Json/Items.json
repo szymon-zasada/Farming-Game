@@ -7,13 +7,11 @@
     "MaxReward": 3,
     "MinReward": 1,
     "Name": "Carrot",
-    "IconName": "carrot",
     "Description": ""
   },
   {
     "Name": "Well",
     "Description": "A well for storing water.",
-    "IconName": "well",
     "EntityName": "Well"
   }
 ]
