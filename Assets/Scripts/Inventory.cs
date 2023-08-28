@@ -51,6 +51,8 @@ public class Inventory
         }
         else
             Items.Remove(item);
+
+        Debug.Log("Item destroyed in inventory");
     }
 
 

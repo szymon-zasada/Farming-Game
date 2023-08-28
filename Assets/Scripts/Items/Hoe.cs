@@ -2,16 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Newtonsoft.Json;
 
-[System.Serializable]
+[Serializable]
 public class Hoe : Item, IMultipleUses
 {
     public int Uses { get; set; }
     public int MaxUses { get; set; }
 
-    public Hoe()
+
+    [JsonConstructor]
+    public Hoe(string name, string description, int uses = 4, int maxUses = 4)
     {
-        
+        Name = name;
+        Description = description;
+        Uses = uses;
+        MaxUses = maxUses;
     }
 
 

@@ -27,17 +27,54 @@ public class InventoryPanel : MonoBehaviour
         itemSlot.GetComponent<ItemSlot>().SetItem(item);
     }
 
+
     public void Refresh()
     {
-        foreach (var itemSlot in _itemSlots)
+        // foreach (var itemSlot in _itemSlots)
+        // {
+        //     Destroy(itemSlot);
+        // }
+        // _itemSlots.Clear();
+        // foreach (var item in InventoryManager.Instance.PlayerInventory.Items)
+        // {
+        //     AddItemSlot(item);
+        // }
+
+
+        foreach (Item playerInventoryItem in InventoryManager.Instance.PlayerInventory.Items)
         {
-            Destroy(itemSlot);
+            // Check if the item is already in an item slot
+            bool itemInSlot = false;
+            foreach (GameObject itemSlotObject in _itemSlots)
+            {
+                ItemSlot itemSlot = itemSlotObject.GetComponent<ItemSlot>();
+                if (itemSlot.Item.Name == playerInventoryItem.Name)
+                {
+                    itemSlot.RefreshSlot();
+                    itemInSlot = true;
+                    break;
+                }
+            }
+            // If the item is not in an item slot, add it to the list
+            if (!itemInSlot)
+            {
+                AddItemSlot(playerInventoryItem);
+            }
         }
-        _itemSlots.Clear();
-        foreach (var item in InventoryManager.Instance.PlayerInventory.Items)
+
+        List<Item> itemsInSlots = _itemSlots.ConvertAll(x => x.GetComponent<ItemSlot>().Item);
+
+        foreach (Item item in itemsInSlots)
         {
-            AddItemSlot(item);
+            if (!InventoryManager.Instance.PlayerInventory.Items.Contains(item))
+            {
+                ItemSlot itemSlot = _itemSlots[itemsInSlots.IndexOf(item)].GetComponent<ItemSlot>();
+                _itemSlots.Remove(_itemSlots[itemsInSlots.IndexOf(item)]);
+                Destroy(itemSlot.gameObject);
+            }
         }
+
+
     }
 
 

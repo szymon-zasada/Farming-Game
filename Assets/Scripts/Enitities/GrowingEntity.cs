@@ -9,7 +9,12 @@ public class GrowingEntity : Entity, IHarvestable, IWaterable
 {
     public float WaterLevel { get; set; }
     public float MaxWaterLevel { get; set; }
-    public void WaterTile(float waterAmount) => WaterLevel += waterAmount;
+    public void WaterTile(float waterAmount)
+    {
+        WaterLevel += waterAmount;
+        if (WaterLevel > MaxWaterLevel)
+            WaterLevel = MaxWaterLevel;
+    }
 
     public IPlantable GrowingItem { get; private set; }
     public float CurrentGrowthTime { get; private set; }
@@ -34,6 +39,7 @@ public class GrowingEntity : Entity, IHarvestable, IWaterable
     {
         base.Start();
         _fullyGrownYPosition = gameObject.transform.localPosition.y + 0.25f;
+        WaterLevel = 0f;
     }
 
 
@@ -47,11 +53,11 @@ public class GrowingEntity : Entity, IHarvestable, IWaterable
 
 
 
-        float bonusGrowthValue = 2f * (WaterLevel > 0 ? 1 : 0);
+        float bonusGrowthValue = 1 + (2f * (WaterLevel > 0 ? 1 : 0));
         CurrentGrowthTime += Time.fixedDeltaTime * bonusGrowthValue;
 
         if (WaterLevel > 0)
-            WaterLevel -= _waterPerTick * Time.fixedDeltaTime;
+            WaterLevel -= _waterPerTick * 0.1f * Time.fixedDeltaTime;
 
 
         VisualizeGrowth();

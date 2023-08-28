@@ -38,11 +38,15 @@ public class WateringCan : Item, IWaterContainer, IMultipleUses
         if (InteractionManager.Instance.SelectedTile is not IFertile tile)
             throw new InvalidOperationException("You can't use that here!");
 
+        if(tile.GrowingEntity.IsGrown)
+            throw new InvalidOperationException("This plant is already grown!");
 
         if(tile.GrowingEntity.WaterLevel < tile.GrowingEntity.MaxWaterLevel)
         {
             int waterNeeded = (int)(tile.GrowingEntity.MaxWaterLevel - tile.GrowingEntity.WaterLevel);
             int waterAvailable = Uses;
+            if(waterNeeded < 1)
+                waterNeeded = 1;
 
             if (waterAvailable < waterNeeded)
                 waterNeeded = waterAvailable;

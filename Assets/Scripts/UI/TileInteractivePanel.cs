@@ -31,7 +31,6 @@ public class TileInteractivePanel : UIPanel
                 _progressBar.maxValue = fertileTile.GrowingEntity.GrowingItem.GrowthTime;
                 _progressBar.value = fertileTile.GrowingEntity.CurrentGrowthTime;
                 _waterBar.maxValue = fertileTile.GrowingEntity.MaxWaterLevel;
-                _waterBar.value = fertileTile.GrowingEntity.WaterLevel;
                 _itemImage.color = Color.white;
                 _rewardItemImage.color = Color.white;
                 _itemQuantity.text = "";

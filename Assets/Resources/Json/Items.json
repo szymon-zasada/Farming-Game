@@ -3,8 +3,8 @@
     "Type": "Plant",
     "MaxQuantity": 99,
     "Quantity": 1,
-    "GrowthTime": 5.0,
-    "MaxWaterLevel": 5.0,
+    "GrowthTime": 60.0,
+    "MaxWaterLevel": 1.0,
     "WaterPerTick": 1.0,
     "RewardItem": null,
     "MaxReward": 3,
@@ -24,5 +24,12 @@
     "MaxUses": 3,
     "Name": "Watering Can",
     "Description": "A watering can for watering plants."
+  },
+  {
+    "Type": "Hoe",
+    "Uses": 3,
+    "MaxUses": 3,
+    "Name": "Hoe",
+    "Description": "A hoe for tilling soil."
   }
 ]

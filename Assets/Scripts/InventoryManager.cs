@@ -39,6 +39,7 @@ public class InventoryManager : MonoBehaviour
         AddItemToPlayerInventory(ItemList.GetItem<Plant>("Carrot"));
         AddItemToPlayerInventory(ItemList.GetItem<PlaceableItem>("Well"));
         AddItemToPlayerInventory(ItemList.GetItem<WateringCan>("Watering Can"));
+        AddItemToPlayerInventory(ItemList.GetItem<Hoe>("Hoe"));
 
 
 

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: standardEntityMaterial 1
-  m_Shader: {fileID: 4800000, guid: 9682ecfdff48442458fdeb0bcf1528df, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0f772b908ec27b84490da795f991d97c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -424,7 +424,7 @@ Material:
     - _Fog: 1
     - _GI_Intensity: 0
     - _GlossMapScale: 1
-    - _Glossiness: -6.41
+    - _Glossiness: 0
     - _GlossyReflections: 1
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
@@ -506,7 +506,7 @@ Material:
     - _MatCapPerspective: 1
     - _MatCapStatic: 0
     - _MaterialID: 1
-    - _Metallic: 0
+    - _Metallic: 0.36
     - _MixedLighting: 0
     - _Mode: 0
     - _Nearest_Distance: 0.5
