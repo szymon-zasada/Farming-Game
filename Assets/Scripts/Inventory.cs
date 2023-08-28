@@ -18,8 +18,14 @@ public class Inventory
             Item existingItem = Items.FirstOrDefault(i => i.Name == item.Name);
             if (existingItem is IStackable existingStackableItem)
             {
-                Debug.Log("Stacking");
+                Debug.Log("ExistingStackable: " + existingStackableItem.Quantity);
+                Debug.Log("Stackable: " + stackableItem.Quantity);
                 existingStackableItem.Quantity += stackableItem.Quantity;
+            }
+            else if (existingItem != null)
+            {
+                // Item with the same name exists but is not stackable
+                Debug.LogWarning($"Cannot stack {item.Name} with existing non-stackable item.");
             }
 
             else

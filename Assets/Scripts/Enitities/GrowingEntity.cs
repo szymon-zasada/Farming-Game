@@ -84,7 +84,7 @@ public class GrowingEntity : Entity, IHarvestable, IWaterable
 
 
             GrowingItem.GenerateRandomRewardQuantity();
-
+            Debug.Log("Harvested " + GrowingItem.RewardItem.Name + " x" + (GrowingItem.RewardItem as IStackable).Quantity);
             InventoryManager.Instance.AddItemToPlayerInventory(GrowingItem.RewardItem);
             InteractionManager.Instance.ResetSelectedItem();
             Destroy(gameObject);

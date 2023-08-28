@@ -37,6 +37,15 @@ public class InteractionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
+
+
+        //if swipe left then rotate camera left
+
+        
+
+
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

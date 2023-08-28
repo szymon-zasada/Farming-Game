@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 using Newtonsoft.Json;
 
 [Serializable]
-public class Plant : Item, IPlantable, IProcessable, IStackable
+public class Plant : Item, IPlantable, IProcessable, IStackable, ICloneable
 {
     public int MaxQuantity { get; set; }
     public int Quantity { get; set; }
@@ -62,7 +62,7 @@ public class Plant : Item, IPlantable, IProcessable, IStackable
         RewardItem = CreateSingleCopy();
 
 
-        tile.Plant(this);
+        tile.Plant((Item)this.Clone());
         Destroy();
         base.Use();
     }
@@ -71,7 +71,12 @@ public class Plant : Item, IPlantable, IProcessable, IStackable
     Plant CreateSingleCopy()
     {
         if (this.RewardItem != null)
-            return this.RewardItem as Plant;
+        {
+            //make a copy of the reward item
+            Plant copy = (this.RewardItem as Plant).Clone() as Plant;
+            return copy;
+        }
+
 
 
         Plant newPlant = new Plant(Name, Description, 1, MaxReward, MinReward, GrowthTime, MaxWaterLevel, WaterPerTick);
@@ -85,15 +90,14 @@ public class Plant : Item, IPlantable, IProcessable, IStackable
     public void GenerateRandomRewardQuantity()
     {
         IStackable stackableRewardItem = RewardItem as IStackable;
-
-        for (int i = 0; i < 5; i++)
-        {
-            Debug.Log("random" + Random.Range(MinReward, MaxReward + 1));
-        }
-
         stackableRewardItem.Quantity = Random.Range(MinReward, MaxReward + 1);
     }
 
+
+    public object Clone()
+    {
+        return this.MemberwiseClone();
+    }
 
 
 

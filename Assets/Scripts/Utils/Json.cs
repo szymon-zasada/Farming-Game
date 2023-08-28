@@ -21,8 +21,8 @@ public class Json
 
     public static List<T> LoadFrom<T>(string path)
     {
-        string json = File.ReadAllText(path);
-
+        var textAsset = Resources.Load(path) as TextAsset;
+        string json = textAsset.text;
         return JsonConvert.DeserializeObject<List<T>>(json);
     }
 }

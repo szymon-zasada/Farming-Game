@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.IO;
 using UnityEngine;
 using System.Reflection;
 
@@ -14,7 +13,8 @@ public class ItemList
 
     public static void LoadItems()
     {
-        string json = File.ReadAllText(DataPaths.ITEMS_PATH);
+        TextAsset textAsset = Resources.Load(DataPaths.ITEMS_PATH) as TextAsset;
+        string json = textAsset.text;
         List = JsonConvert.DeserializeObject<List<Item>>(json, new ItemConverter());
         LoadIcons();
     }

@@ -45,7 +45,7 @@ public class InventoryPanel : MonoBehaviour
     {
         if (_itemSlots.Count > 0)
         {
-            Background.sizeDelta = new Vector2(Container.sizeDelta.x + 20, 120);
+            Background.sizeDelta = new Vector2(Container.sizeDelta.x + 20, 140);
         }
         else
         {

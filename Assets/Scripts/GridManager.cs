@@ -23,6 +23,13 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private List<Tile> _tiles = new List<Tile>();
 
+    
+    public void RotateGrid(int angle)
+    {
+        transform.Rotate(0, angle, 0);
+        transform.position = new Vector3(0, 0, transform.rotation.eulerAngles.y/10f);
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +42,7 @@ public class GridManager : MonoBehaviour
 
         CreateGridLayer(5, 5);
 
-        _gameCamera.SetCameraToPosition(new Vector3(10, 1, 10));
+       // _gameCamera.SetCameraToPosition(new Vector3(-10, 20, 0));
 
 
 

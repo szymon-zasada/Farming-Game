@@ -48,7 +48,7 @@ public class TimeManager : MonoBehaviour
     {
         _sun.transform.localRotation = Quaternion.Euler((_currentTimeOfDay * 360f) - 90, 170, 0);
 
-        float intensityMultiplier = 1;
+        float intensityMultiplier = _maxIntensity;
         
         //night
         if (_currentTimeOfDay <= _sunriseTime || _currentTimeOfDay >= _sunsetTime + _sunsetDuration)
@@ -60,15 +60,13 @@ public class TimeManager : MonoBehaviour
         //sunrise
         else if (_currentTimeOfDay <= _sunriseTime + _sunriseDuration)
         {
-            intensityMultiplier = Mathf.Clamp((_currentTimeOfDay - _sunriseTime) * (1 / _sunriseDuration), _minIntensity, _maxIntensity);
+            intensityMultiplier = Mathf.Clamp((_currentTimeOfDay - _sunriseTime) * (1 / _sunriseDuration), _minIntensity, _maxIntensity*2);
             
         }
         else if (_currentTimeOfDay >= _sunsetTime)
         {
-            intensityMultiplier = Mathf.Clamp(1 - ((_currentTimeOfDay - _sunsetTime) * (1 / _sunsetDuration)), _minIntensity, _maxIntensity);
-            //1 - (0.75 - 0.75) * (1 / 0.2) = 1 - 0 * 5 = 1
-            //1 - (0.76 - 0.75) * (1 / 0.2) = 1 - 0.01 * 5 = 0.95
-           // intensityMultiplier = 1 - ((_currentTimeOfDay - _sunsetTime) * (1 / _sunsetDuration));
+            intensityMultiplier = Mathf.Clamp(1 - ((_currentTimeOfDay - _sunsetTime) * (1 / _sunsetDuration)), _minIntensity, _maxIntensity*2);
+
         }
 
 

@@ -8,7 +8,7 @@
     "WaterPerTick": 1.0,
     "RewardItem": null,
     "MaxReward": 3,
-    "MinReward": 1,
+    "MinReward": 2,
     "Name": "Carrot",
     "Description": "A carrot."
   },
