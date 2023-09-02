@@ -87,10 +87,12 @@ public class GrowingEntity : Entity, IHarvestable, IWaterable
             if (GrowingItem.RewardItem == null)
                 throw new ArgumentException("Reward item is null.");
 
-
+            if(InventoryManager.Instance.PlayerInventory.IsFull)
+                throw new InvalidOperationException("Inventory is full.");
 
             GrowingItem.GenerateRandomRewardQuantity();
             Debug.Log("Harvested " + GrowingItem.RewardItem.Name + " x" + (GrowingItem.RewardItem as IStackable).Quantity);
+            
             InventoryManager.Instance.AddItemToPlayerInventory(GrowingItem.RewardItem);
             InteractionManager.Instance.ResetSelectedItem();
             Destroy(gameObject);

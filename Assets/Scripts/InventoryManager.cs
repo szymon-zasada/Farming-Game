@@ -24,7 +24,11 @@ public class InventoryManager : MonoBehaviour
     }
 
 
-    [SerializeField] public Inventory PlayerInventory { get; private set; } = new Inventory();
+    [SerializeField]
+    public Inventory PlayerInventory { get; private set; } = new Inventory()
+    {
+        MaxCapacity = 9
+    };
 
 
     [SerializeField] public InventoryPanel InventoryPanel { get; private set; }

@@ -35,6 +35,7 @@ public class ItemSlot : MonoBehaviour
     {
         _item = item;
         _image.sprite = item.Icon;
+        _image.color = Color.white;
         if (item is IMultipleUses multipleUsesItem)
         {
             if (multipleUsesItem.MaxUses > 1)
@@ -74,6 +75,15 @@ public class ItemSlot : MonoBehaviour
         {
             _quantityText.text = "";
         }
+    }
+
+    public void Clear()
+    {
+        _item = null;
+        _image.sprite = null;
+        _image.color = Color.clear;
+        _quantityText.text = "";
+        _usesSlider.gameObject.SetActive(false);
     }
 
 

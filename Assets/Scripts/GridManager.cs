@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using System;
+using DG.Tweening;
 
 [RequireComponent(typeof(Grid))]
 public class GridManager : MonoBehaviour
@@ -23,12 +24,6 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private List<Tile> _tiles = new List<Tile>();
 
-    
-    public void RotateGrid(int angle)
-    {
-        transform.Rotate(0, angle, 0);
-        transform.position = new Vector3(0, 0, transform.rotation.eulerAngles.y/10f);
-    }
 
 
     // Start is called before the first frame update

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.U2D;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameCamera : MonoBehaviour
 {
@@ -31,11 +32,6 @@ public class GameCamera : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-    }
-
-    public void RotateCamera(float angle)
-    {
-        _targetRotation.y += angle;
     }
 
     private Vector3 _baseRotation;
@@ -82,18 +78,47 @@ public class GameCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _targetRotation.x = 45;
-        if (Vector3.Distance(_camera.transform.position, _targetPosition) > 0.1f)
+        //   _targetRotation.x = 45;
+        _camera.transform.position = _targetPosition;
+        // if (Vector3.Distance(_camera.transform.position, _targetPosition) > 0.1f)
+        // {
+        //     // 
+        //     _camera.transform.position = Vector3.Lerp(_camera.transform.position, _targetPosition, _speed * Time.deltaTime);
+        // }
+
+        // if (Vector3.Distance(_camera.transform.rotation.eulerAngles, _targetRotation) > 0.1f)
+        // {
+        //     _camera.transform.rotation = Quaternion.Lerp(_camera.transform.rotation, Quaternion.Euler(_targetRotation), _speed * Time.deltaTime);
+
+        //     // RotateCamera(1f);
+        // }
+
+        // if (Input.GetKeyDown(KeyCode.A))
+        // {
+        //     _targetRotation.y -= 90f;
+        // }
+
+        // if(Input.GetKeyDown(KeyCode.D))
+        // {
+        //     _targetRotation.y += 90f;
+        // }
+
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            _camera.transform.position = Vector3.Lerp(_camera.transform.position, _targetPosition, _speed * Time.deltaTime);
+            _camera.transform.DORotate(new Vector3(
+                _camera.transform.rotation.eulerAngles.x,
+                _camera.transform.rotation.eulerAngles.y + 90,
+                _camera.transform.rotation.eulerAngles.z), 1f).SetEase(Ease.OutSine);
         }
 
-        if (Vector3.Distance(_camera.transform.rotation.eulerAngles, _targetRotation) > 0.1f)
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            _camera.transform.rotation = Quaternion.Lerp(_camera.transform.rotation, Quaternion.Euler(_targetRotation), _speed * Time.deltaTime);
-
-            // RotateCamera(1f);
+            _camera.transform.DORotate(new Vector3(
+                _camera.transform.rotation.eulerAngles.x,
+                _camera.transform.rotation.eulerAngles.y - 90,
+                _camera.transform.rotation.eulerAngles.z), 1f).SetEase(Ease.OutSine);
         }
+
 
 
 
@@ -129,7 +154,10 @@ public class GameCamera : MonoBehaviour
                 _swipeTimer += Time.deltaTime;
                 if (_swipeTimer >= _swipeDelay)
                 {
-                    _targetRotation.y -= 90f;
+                    _camera.transform.DORotate(new Vector3(
+                        _camera.transform.rotation.eulerAngles.x,
+                        _camera.transform.rotation.eulerAngles.y - 90,
+                        _camera.transform.rotation.eulerAngles.z), 1f).SetEase(Ease.OutSine);
                     _swipeTimer = 0f;
                 }
             }
@@ -139,7 +167,10 @@ public class GameCamera : MonoBehaviour
                 _swipeTimer += Time.deltaTime;
                 if (_swipeTimer >= _swipeDelay)
                 {
-                    _targetRotation.y += 90f;
+                    _camera.transform.DORotate(new Vector3(
+                        _camera.transform.rotation.eulerAngles.x,
+                        _camera.transform.rotation.eulerAngles.y + 90,
+                        _camera.transform.rotation.eulerAngles.z), 1f).SetEase(Ease.OutSine);
                     _swipeTimer = 0f;
                 }
             }

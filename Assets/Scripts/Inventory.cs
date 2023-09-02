@@ -4,15 +4,17 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-[System.Serializable]
 public class Inventory
 {
     public List<Item> Items { get; private set; } = new List<Item>();
+    public int MaxCapacity { get; set; }
+    public bool IsFull => Items.Count >= MaxCapacity;
 
 
 
     public void AddItem(Item item)
     {
+
         if (item is IStackable stackableItem)
         {
             Item existingItem = Items.FirstOrDefault(i => i.Name == item.Name);
@@ -51,8 +53,7 @@ public class Inventory
         }
         else
             Items.Remove(item);
-
-        Debug.Log("Item destroyed in inventory");
+            
     }
 
 

@@ -18,3 +18,8 @@ public interface IWaterable
     public void WaterTile(float waterAmount);
 
 }
+
+public interface IStorage
+{
+    public Inventory Inventory { get; set; }
+}
